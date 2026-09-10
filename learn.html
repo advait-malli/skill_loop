@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn - Skill Loop</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="theme.js"></script>
+</head>
+<body>
+    <div class="page-content">
+        <div class="learn-header">
+            <h1>Courses</h1>
+            <div class="learn-tabs">
+                <button class="learn-tab active" data-filter="in-progress,completed">My Courses</button>
+                <button class="learn-tab" data-filter="not-started">Explore</button>
+                <button class="learn-tab" data-filter="all">All</button>
+            </div>
+        </div>
+
+        <div class="course-grid" id="courses-grid">
+            <div class="loading">Loading courses...</div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { api, renderCourseCard } from './api.js';
+
+        let allCourses = [];
+
+        async function loadCourses() {
+            try {
+                allCourses = await api.courses.getAll();
+                renderFiltered('in-progress,completed');
+            } catch (e) {
+                console.error('Failed to load courses:', e);
+                document.getElementById('courses-grid').innerHTML = '<div class="error">Failed to load courses</div>';
+            }
+        }
+
+        function renderFiltered(filter) {
+            const grid = document.getElementById('courses-grid');
+            grid.innerHTML = '';
+            let filtered;
+            if (filter === 'all') {
+                filtered = allCourses;
+            } else {
+                const statuses = filter.split(',');
+                filtered = allCourses.filter(c => statuses.includes(c.status));
+            }
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '<div class="empty-state"><span class="material-symbols-outlined" style="font-size:48px;color:var(--text-muted)">school</span><p>No courses found</p></div>';
+                return;
+            }
+
+            filtered.forEach(course => {
+                const card = renderCourseCard(course);
+                grid.appendChild(card);
+            });
+        }
+
+        document.querySelectorAll('.learn-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.learn-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                renderFiltered(tab.dataset.filter);
+            });
+        });
+
+        loadCourses();
+    </script>
+</body>
+</html>

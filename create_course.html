@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Course - Skill Loop</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="theme.js"></script>
+</head>
+<body>
+    <div class="page-content">
+        <a href="learn.html" class="home-btn"><span class="material-symbols-outlined">arrow_back</span> Courses</a>
+        <h1>Create a Course</h1>
+        <div class="create-layout">
+            <div class="create-field">
+                <label for="course-title">Course Title</label>
+                <input type="text" id="course-title" placeholder="e.g. Introduction to Web Development">
+            </div>
+            <div class="create-field">
+                <label for="course-desc">Description</label>
+                <textarea id="course-desc" placeholder="What will students learn in this course?"></textarea>
+            </div>
+            <div class="create-field">
+                <label for="course-image">Cover Image</label>
+                <input type="file" id="course-image" accept="image/*">
+                <div class="image-preview" id="image-preview" style="display:none">
+                    <img id="preview-img" src="" alt="Cover preview">
+                    <button type="button" class="btn-secondary" id="remove-image" style="margin-top:8px"><span class="material-symbols-outlined inline-icon">close</span> Remove</button>
+                </div>
+            </div>
+
+            <div class="lessons-section">
+                <div class="lessons-header">
+                    <h2>Lessons</h2>
+                    <button class="btn-primary" id="add-lesson-btn" type="button">
+                        <span class="material-symbols-outlined inline-icon">add</span> Add Lesson
+                    </button>
+                </div>
+                <div class="lessons-builder" id="lessons-builder">
+                    <div class="empty-lessons" id="empty-lessons">
+                        <span class="material-symbols-outlined" style="font-size:40px;color:var(--text-muted)">playlist_add</span>
+                        <p>No lessons yet. Click "Add Lesson" to get started.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="create-actions">
+                <button class="btn-secondary" onclick="window.location.href='learn.html'">Cancel</button>
+                <button class="btn-primary" id="submit-btn">Create Course</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { api } from './api.js';
+
+        let currentUserId = null;
+        let lessons = [];
+
+        async function init() {
+            try {
+                const user = await api.accounts.getCurrent();
+                currentUserId = user.id;
+            } catch (e) {
+                console.error('Failed to load user:', e);
+            }
+        }
+
+        // Cover image upload
+        let thumbnailPath = '';
+        const imageInput = document.getElementById('course-image');
+        const previewEl = document.getElementById('image-preview');
+        const previewImg = document.getElementById('preview-img');
+        const removeImageBtn = document.getElementById('remove-image');
+
+        imageInput.addEventListener('change', async () => {
+            const file = imageInput.files[0];
+            if (!file) return;
+            previewImg.src = URL.createObjectURL(file);
+            previewEl.style.display = 'block';
+            try {
+                const meta = await api.upload.file(file);
+                thumbnailPath = meta.path;
+            } catch (err) {
+                console.error('Cover upload failed:', err);
+                thumbnailPath = '';
+            }
+            imageInput.value = '';
+        });
+
+        removeImageBtn.addEventListener('click', () => {
+            thumbnailPath = '';
+            previewImg.src = '';
+            previewEl.style.display = 'none';
+        });
+
+        document.getElementById('add-lesson-btn').addEventListener('click', () => {
+            lessons.push({ title: '', body: '' });
+            renderLessons();
+        });
+
+        function renderLessons() {
+            const builder = document.getElementById('lessons-builder');
+            const empty = document.getElementById('empty-lessons');
+            if (lessons.length === 0) {
+                empty.style.display = 'flex';
+                builder.querySelectorAll('.lesson-editor').forEach(el => el.remove());
+                return;
+            }
+            empty.style.display = 'none';
+            builder.querySelectorAll('.lesson-editor').forEach(el => el.remove());
+
+            lessons.forEach((lesson, i) => {
+                const div = document.createElement('div');
+                div.className = 'lesson-editor';
+                div.innerHTML = `
+                    <div class="lesson-editor-header">
+                        <span class="lesson-editor-num">Lesson ${i + 1}</span>
+                        <button class="lesson-remove-btn" data-idx="${i}" type="button">
+                            <span class="material-symbols-outlined">close</span>
+                        </button>
+                    </div>
+                    <input type="text" class="lesson-title-input" placeholder="Lesson title" value="${lesson.title}" data-idx="${i}">
+                    <textarea class="lesson-body-input" placeholder="Lesson content..." data-idx="${i}">${lesson.body}</textarea>
+                `;
+                builder.appendChild(div);
+            });
+
+            builder.querySelectorAll('.lesson-remove-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    lessons.splice(parseInt(btn.dataset.idx), 1);
+                    renderLessons();
+                });
+            });
+
+            builder.querySelectorAll('.lesson-title-input').forEach(input => {
+                input.addEventListener('input', () => {
+                    lessons[parseInt(input.dataset.idx)].title = input.value;
+                });
+            });
+
+            builder.querySelectorAll('.lesson-body-input').forEach(textarea => {
+                textarea.addEventListener('input', () => {
+                    lessons[parseInt(textarea.dataset.idx)].body = textarea.value;
+                });
+            });
+        }
+
+        document.getElementById('submit-btn').addEventListener('click', async () => {
+            const title = document.getElementById('course-title').value.trim();
+            const description = document.getElementById('course-desc').value.trim();
+
+            if (!title) {
+                alert('Please add a course title.');
+                return;
+            }
+
+            if (lessons.length === 0) {
+                alert('Please add at least one lesson.');
+                return;
+            }
+
+            const emptyLesson = lessons.find(l => !l.title.trim());
+            if (emptyLesson) {
+                alert('All lessons must have a title.');
+                return;
+            }
+
+            const btn = document.getElementById('submit-btn');
+            btn.disabled = true;
+            btn.textContent = 'Creating...';
+
+            try {
+                await api.courses.create({
+                    title,
+                    description,
+                    image: thumbnailPath || `https://placehold.co/800x400/1e293b/00EBA9?text=${encodeURIComponent(title)}`,
+                    instructorId: currentUserId,
+                    lessons: lessons.map(l => ({ title: l.title.trim(), body: l.body.trim() }))
+                });
+                window.location.href = 'learn.html';
+            } catch (err) {
+                console.error('Failed to create course:', err);
+                alert('Failed to create course. Please try again.');
+                btn.disabled = false;
+                btn.textContent = 'Create Course';
+            }
+        });
+
+        init();
+    </script>
+</body>
+</html>

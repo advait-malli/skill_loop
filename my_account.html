@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Account - Skill Loop</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="theme.js"></script>
+</head>
+<body>
+    <div class="page-content">
+        <div class="profile-header">
+            <div class="profile-avatar-wrap">
+                <div class="avatar-xl" id="profile-avatar">?</div>
+                <button class="avatar-upload-btn" id="avatar-upload-btn" title="Change profile photo">
+                    <span class="material-symbols-outlined">photo_camera</span>
+                </button>
+                <input type="file" id="avatar-upload" accept="image/*" hidden>
+            </div>
+            <div class="profile-info">
+                <div class="profile-name-row">
+                    <h1 id="profile-name">Loading...</h1>
+                    <button class="profile-edit-btn" id="profile-edit-btn" title="Edit profile">
+                        <span class="material-symbols-outlined">edit</span>
+                    </button>
+                </div>
+                <p class="profile-username" id="profile-username"></p>
+                <p class="profile-bio" id="profile-bio"></p>
+                <div class="profile-edit-inputs" id="profile-edit-inputs" style="display:none">
+                    <input type="text" id="edit-name" placeholder="Display name" maxlength="40">
+                    <textarea id="edit-bio" rows="3" placeholder="Tell people what you're into..."></textarea>
+                    <div class="profile-edit-actions">
+                        <button class="btn-primary" id="save-profile-btn">Save</button>
+                        <button class="btn-secondary" id="cancel-profile-btn">Cancel</button>
+                    </div>
+                </div>
+                <div class="profile-stats">
+                    <span><strong id="posts-count">0</strong> posts</span>
+                    <span><strong id="skills-offered-count">0</strong> skills offered</span>
+                    <span><strong id="skills-wanted-count">0</strong> skills wanted</span>
+                    <span><strong id="subscribers-count">0</strong> subscribers</span>
+                    <span class="joined-date" id="joined-date"></span>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="profile-section-title">My Skills</h2>
+        <div class="card-grid" id="skills-grid">
+            <div class="loading">Loading...</div>
+        </div>
+
+        <div class="posts-section-header">
+            <h2 class="profile-section-title" style="margin:0">My Posts</h2>
+            <a class="btn-primary btn-small" href="create.html"><span class="material-symbols-outlined inline-icon">add</span> New Post</a>
+        </div>
+        <div class="video-grid" id="posts-grid">
+            <div class="loading">Loading posts...</div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { api, renderPostCard } from './api.js';
+
+        let currentAccount = null;
+
+        function renderAvatar(account) {
+            const avatarEl = document.getElementById('profile-avatar');
+            avatarEl.innerHTML = '';
+            if (account.avatarUrl) {
+                const img = document.createElement('img');
+                img.src = account.avatarUrl;
+                img.alt = account.displayName || 'Profile';
+                avatarEl.appendChild(img);
+            } else {
+                avatarEl.textContent = account.avatar || '?';
+            }
+        }
+
+        function prettyDate(iso) {
+            return new Date(iso).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
+        }
+
+        async function loadAccount() {
+            try {
+                const account = await api.accounts.getCurrent();
+                currentAccount = account;
+                renderAccount(account);
+                renderAvatar(account);
+                loadPosts(account.id);
+            } catch (e) {
+                console.error('Failed to load account:', e);
+                document.getElementById('skills-grid').innerHTML = '<div class="error">Failed to load account</div>';
+            }
+        }
+
+        async function loadPosts(accountId) {
+            const grid = document.getElementById('posts-grid');
+            try {
+                const posts = await api.posts.getAll({ authorId: accountId });
+                document.getElementById('posts-count').textContent = posts.length;
+                grid.innerHTML = '';
+                if (posts.length === 0) {
+                    grid.innerHTML = '<div class="empty-state"><span class="material-symbols-outlined" style="font-size:48px;color:var(--text-muted)">article</span><p>No posts yet. Share your first post!</p></div>';
+                    return;
+                }
+                posts.forEach(post => grid.appendChild(renderPostCard(post, accountId)));
+            } catch (e) {
+                console.error('Failed to load posts:', e);
+                grid.innerHTML = '<div class="error">Failed to load posts</div>';
+            }
+        }
+
+        function renderAccount(account) {
+            document.getElementById('profile-name').textContent = account.displayName || 'Unknown';
+            document.getElementById('profile-username').textContent = '@' + (account.username || 'user');
+            const bioEl = document.getElementById('profile-bio');
+            bioEl.textContent = account.bio || '';
+            bioEl.style.display = account.bio ? 'block' : 'none';
+            document.getElementById('skills-offered-count').textContent = account.skillsOffered?.length || 0;
+            document.getElementById('skills-wanted-count').textContent = account.skillsWanted?.length || 0;
+            document.getElementById('subscribers-count').textContent = account.subscribers || 0;
+            document.getElementById('joined-date').textContent = account.createdAt ? 'Joined ' + prettyDate(account.createdAt) : '';
+
+            const grid = document.getElementById('skills-grid');
+            grid.innerHTML = '';
+
+            const offered = account.skillsOffered || [];
+            const wanted = account.skillsWanted || [];
+
+            const offeredCard = document.createElement('div');
+            offeredCard.className = 'card';
+            offeredCard.innerHTML = `
+                <h2>Skills I Offer</h2>
+                ${offered.length
+                    ? `<div class="skill-chips">${offered.map(s => `<span class="skill-chip">${s}</span>`).join('')}</div>`
+                    : '<p>No skills listed yet.</p>'}
+                <p class="meta">${offered.length} skill${offered.length === 1 ? '' : 's'} available for swap</p>
+            `;
+            grid.appendChild(offeredCard);
+
+            const wantedCard = document.createElement('div');
+            wantedCard.className = 'card';
+            wantedCard.innerHTML = `
+                <h2>Skills I Want to Learn</h2>
+                ${wanted.length
+                    ? `<div class="skill-chips">${wanted.map(s => `<span class="skill-chip">${s}</span>`).join('')}</div>`
+                    : '<p>No skills requested yet.</p>'}
+                <p class="meta">${wanted.length} active swap request${wanted.length === 1 ? '' : 's'}</p>
+            `;
+            grid.appendChild(wantedCard);
+        }
+
+        // ---- Edit profile (name + bio) ----
+        const editBtn = document.getElementById('profile-edit-btn');
+        const editInputs = document.getElementById('profile-edit-inputs');
+        const nameRowEl = document.querySelector('.profile-name-row');
+        const bioEl = document.getElementById('profile-bio');
+
+        function enterEditMode() {
+            document.getElementById('edit-name').value = currentAccount.displayName || '';
+            document.getElementById('edit-bio').value = currentAccount.bio || '';
+            nameRowEl.style.display = 'none';
+            bioEl.style.display = 'none';
+            editBtn.style.display = 'none';
+            editInputs.style.display = 'flex';
+            document.getElementById('edit-name').focus();
+        }
+
+        function exitEditMode() {
+            editInputs.style.display = 'none';
+            nameRowEl.style.display = 'flex';
+            bioEl.style.display = currentAccount.bio ? 'block' : 'none';
+            editBtn.style.display = 'flex';
+        }
+
+        editBtn.addEventListener('click', enterEditMode);
+        document.getElementById('cancel-profile-btn').addEventListener('click', exitEditMode);
+
+        document.getElementById('save-profile-btn').addEventListener('click', async () => {
+            const name = document.getElementById('edit-name').value.trim();
+            const bio = document.getElementById('edit-bio').value.trim();
+            const saveBtn = document.getElementById('save-profile-btn');
+            if (!name) {
+                alert('Name cannot be empty.');
+                return;
+            }
+            saveBtn.disabled = true;
+            saveBtn.textContent = 'Saving...';
+            try {
+                const res = await fetch(`/api/accounts/${currentAccount.id}`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ displayName: name, bio })
+                });
+                if (!res.ok) {
+                    const err = await res.json().catch(() => ({}));
+                    throw new Error(err.error || 'Failed to update profile');
+                }
+                currentAccount = await res.json();
+                renderAccount(currentAccount);
+                exitEditMode();
+            } catch (err) {
+                console.error('Profile update failed:', err);
+                alert('Failed to update profile: ' + err.message);
+            } finally {
+                saveBtn.disabled = false;
+                saveBtn.textContent = 'Save';
+            }
+        });
+
+        // ---- Profile photo upload ----
+        document.getElementById('avatar-upload-btn').addEventListener('click', () => {
+            document.getElementById('avatar-upload').click();
+        });
+
+        document.getElementById('avatar-upload').addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file || !currentAccount) return;
+            const btn = document.getElementById('avatar-upload-btn');
+            btn.innerHTML = '<span class="material-symbols-outlined">sync</span>';
+            btn.disabled = true;
+            try {
+                const meta = await api.upload.file(file);
+                const updated = await fetch(`/api/accounts/${currentAccount.id}`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ avatarUrl: meta.path })
+                });
+                if (!updated.ok) {
+                    const err = await updated.json().catch(() => ({}));
+                    throw new Error(err.error || 'Failed to update profile');
+                }
+                currentAccount = await updated.json();
+                renderAvatar(currentAccount);
+            } catch (err) {
+                console.error('Photo upload failed:', err);
+                alert('Failed to upload photo: ' + err.message);
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<span class="material-symbols-outlined">photo_camera</span>';
+                e.target.value = '';
+            }
+        });
+
+        loadAccount();
+
+        // Open post on cover/title click
+        document.addEventListener('click', (e) => {
+            const opener = e.target.closest('[data-action="open"]');
+            if (!opener) return;
+            const postId = opener.getAttribute('data-post-id');
+            if (postId) window.location.href = `watch.html?id=${postId}`;
+        });
+    </script>
+</body>
+</html>

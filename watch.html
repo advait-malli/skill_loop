@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post - Skill Loop</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="theme.js"></script>
+</head>
+<body>
+    <div class="page-content">
+        <a href="home.html" class="home-btn"><span class="material-symbols-outlined">arrow_back</span> Home</a>
+
+        <div id="watch-main">
+            <div class="loading">Loading post...</div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { api, formatTimeAgo } from './api.js';
+
+        let currentUserId = null;
+        let currentPost = null;
+
+        function getPostIdFromUrl() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('id');
+        }
+
+        async function init() {
+            try {
+                const user = await api.accounts.getCurrent();
+                currentUserId = user.id;
+            } catch (e) {
+                console.error('Failed to load user:', e);
+            }
+            const postId = getPostIdFromUrl();
+            if (postId) {
+                await loadPost(postId);
+            } else {
+                document.getElementById('watch-main').innerHTML = '<div class="error">No post ID provided</div>';
+            }
+        }
+
+        async function loadPost(postId) {
+            const main = document.getElementById('watch-main');
+            try {
+                const post = await api.posts.get(postId);
+                currentPost = post;
+                renderPost(post);
+            } catch (e) {
+                console.error('Failed to load post:', e);
+                main.innerHTML = '<div class="error">Failed to load post</div>';
+            }
+        }
+
+        function renderPost(post) {
+            const author = post.author || {};
+            const timeAgo = formatTimeAgo(post.createdAt);
+            const isLiked = currentUserId && post.likedBy?.includes(currentUserId);
+            const tagsHtml = post.tags?.map(t => `<span class="detected-tag"><span class="material-symbols-outlined inline-icon">${t}</span></span>`).join(' ') || '';
+
+            const main = document.getElementById('watch-main');
+            main.innerHTML = `
+                <div class="course-hero">
+                    ${post.image ? `<img src="${post.image}" alt="${post.title}" class="course-hero-img">` : `<div class="course-hero-img" style="background:var(--bg-tertiary)"></div>`}
+                    <div class="course-hero-overlay">
+                        <h1>${post.title}</h1>
+                        <div class="course-hero-meta">
+                            <span>${timeAgo}</span>
+                            <span>${post.likes || 0} likes</span>
+                            <span>${post.comments?.length || 0} comments</span>
+                        </div>
+                        <div class="post-hero-actions">
+                            <button class="action-chip" id="like-btn" data-liked="${isLiked}"><span class="material-symbols-outlined">${isLiked ? 'favorite' : 'favorite_border'}</span> ${post.likes || 0}</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="lesson-content-area">
+                    <div class="lesson-header">
+                        <h2>Description</h2>
+                    </div>
+                    <div class="lesson-body">${post.body || 'No description'} ${tagsHtml ? '<div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:6px">' + tagsHtml + '</div>' : ''}</div>
+                    ${post.files?.length ? `
+                    <div style="margin-top:24px">
+                        <h4 style="font-size:0.85rem;font-weight:600;color:var(--text-secondary);margin:0 0 8px;text-transform:uppercase;letter-spacing:0.05em">Attached Files</h4>
+                        <div class="file-list">
+                            ${post.files.map(f => f.path
+                                ? `<a class="file-item" href="${f.path}" download="${f.name}" style="text-decoration:none"><span class="material-symbols-outlined inline-icon">${f.icon || 'insert_drive_file'}</span> ${f.name}<span class="material-symbols-outlined inline-icon" style="margin-left:auto">download</span></a>`
+                                : `<div class="file-item"><span class="material-symbols-outlined inline-icon">${f.icon || 'insert_drive_file'}</span> ${f.name}</div>`).join('')}
+                        </div>
+                    </div>
+                    ` : ''}
+                    <div class="comments-section">
+                        <h3>${post.comments?.length || 0} Comments</h3>
+                        <div id="comments-list"></div>
+                        <div class="comment-input">
+                            <div class="avatar small">${currentUserId ? 'AM' : '?'}</div>
+                            <input type="text" placeholder="Add a comment..." id="comment-input">
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            attachEventListeners(post.id);
+            renderComments(post.comments || []);
+        }
+
+        function attachEventListeners(postId) {
+            document.getElementById('like-btn')?.addEventListener('click', async () => {
+                try {
+                    const result = await api.posts.like(postId, currentUserId);
+                    const btn = document.getElementById('like-btn');
+                    btn.dataset.liked = result.liked;
+                    btn.innerHTML = `<span class="material-symbols-outlined">${result.liked ? 'favorite' : 'favorite_border'}</span> ${result.likes}`;
+                } catch (err) {
+                    console.error('Like failed:', err);
+                }
+            });
+
+            document.getElementById('comment-input')?.addEventListener('keypress', async (e) => {
+                if (e.key === 'Enter' && e.target.value.trim()) {
+                    try {
+                        await api.posts.addComment(postId, { authorId: currentUserId, body: e.target.value.trim() });
+                        e.target.value = '';
+                        const post = await api.posts.get(postId);
+                        renderComments(post.comments || []);
+                        document.querySelector('.comments-section h3').textContent = `${post.comments?.length || 0} Comments`;
+                    } catch (err) {
+                        console.error('Comment failed:', err);
+                    }
+                }
+            });
+        }
+
+        function renderComments(comments) {
+            const container = document.getElementById('comments-list');
+            container.innerHTML = comments.map(c => `
+                <div class="comment">
+                    <div class="avatar small">${c.author?.avatarUrl ? `<img src="${c.author.avatarUrl}" alt="">` : (c.author?.avatar || '?')}</div>
+                    <div class="comment-body">
+                        <strong>${c.author?.displayName || 'Unknown'}</strong>
+                        <p>${c.body}</p>
+                        <span class="comment-time">${formatTimeAgo(c.createdAt)}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        init();
+    </script>
+</body>
+</html>

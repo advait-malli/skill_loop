@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course - Skill Loop</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="page-content">
+        <a href="learn.html" class="home-btn"><span class="material-symbols-outlined">arrow_back</span> Courses</a>
+
+        <div class="course-detail-layout" id="course-layout">
+            <div class="course-detail-main" id="course-main">
+                <div class="loading">Loading course...</div>
+            </div>
+            <div class="course-detail-sidebar" id="course-sidebar">
+                <h3>Lessons</h3>
+                <div class="lesson-list" id="lesson-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { api } from './api.js';
+
+        let course = null;
+        let currentLessonIdx = 0;
+
+        async function init() {
+            const params = new URLSearchParams(window.location.search);
+            const courseId = params.get('id');
+            if (!courseId) {
+                document.getElementById('course-main').innerHTML = '<div class="error">No course specified</div>';
+                return;
+            }
+            try {
+                course = await api.courses.get(courseId);
+                document.title = course.title + ' - Skill Loop';
+                renderCourse();
+            } catch (e) {
+                console.error('Failed to load course:', e);
+                document.getElementById('course-main').innerHTML = '<div class="error">Failed to load course</div>';
+            }
+        }
+
+        function renderCourse() {
+            if (!course) return;
+            const lessons = course.lessons || [];
+            const completedCount = lessons.filter(l => l.completed).length;
+
+            const mainEl = document.getElementById('course-main');
+            mainEl.innerHTML = `
+                <div class="course-hero">
+                    <img src="${course.image}" alt="${course.title}" class="course-hero-img">
+                    <div class="course-hero-overlay">
+                        <h1>${course.title}</h1>
+                        <p class="course-hero-desc">${course.description || ''}</p>
+                        <div class="course-hero-meta">
+                            <span class="course-status ${course.status}">${course.status === 'completed' ? 'Completed' : course.status === 'in-progress' ? 'In Progress' : 'Not Started'}</span>
+                            <span>${completedCount} of ${lessons.length} lessons completed</span>
+                        </div>
+                        <div class="progress-bar" style="margin-top:12px">
+                            <div class="progress-fill" style="width: ${course.progress}%"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="lesson-content-area" id="lesson-content"></div>
+            `;
+
+            renderLessonList();
+            renderLessonContent(lessons.length > 0 ? 0 : -1);
+        }
+
+        function renderLessonList() {
+            const lessons = course.lessons || [];
+            const listEl = document.getElementById('lesson-list');
+            listEl.innerHTML = lessons.map((lesson, i) => `
+                <div class="lesson-list-item ${i === currentLessonIdx ? 'active' : ''} ${lesson.completed ? 'completed' : ''}" data-idx="${i}">
+                    <div class="lesson-list-check">
+                        <span class="material-symbols-outlined ${lesson.completed ? 'filled' : ''}">${lesson.completed ? 'check_circle' : 'radio_button_unchecked'}</span>
+                    </div>
+                    <div class="lesson-list-info">
+                        <span class="lesson-list-num">Lesson ${i + 1}</span>
+                        <span class="lesson-list-title">${lesson.title}</span>
+                    </div>
+                </div>
+            `).join('');
+
+            listEl.querySelectorAll('.lesson-list-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    const idx = parseInt(item.dataset.idx);
+                    currentLessonIdx = idx;
+                    renderLessonList();
+                    renderLessonContent(idx);
+                });
+            });
+        }
+
+        function renderLessonContent(idx) {
+            const lessons = course.lessons || [];
+            const area = document.getElementById('lesson-content');
+            if (idx < 0 || idx >= lessons.length) {
+                area.innerHTML = '<div class="empty-state"><span class="material-symbols-outlined" style="font-size:48px;color:var(--text-muted)">school</span><p>No lessons yet</p></div>';
+                return;
+            }
+            const lesson = lessons[idx];
+            const prevIdx = idx > 0 ? idx - 1 : null;
+            const nextIdx = idx < lessons.length - 1 ? idx + 1 : null;
+
+            area.innerHTML = `
+                <div class="lesson-header">
+                    <span class="lesson-label">Lesson ${idx + 1} of ${lessons.length}</span>
+                    <h2>${lesson.title}</h2>
+                </div>
+                <div class="lesson-body">${(lesson.body || '').replace(/\n/g, '<br>')}</div>
+                <div class="lesson-actions">
+                    <button class="btn" id="toggle-complete" data-lesson-id="${lesson.id}">
+                        <span class="material-symbols-outlined">${lesson.completed ? 'check_circle' : 'radio_button_unchecked'}</span>
+                        ${lesson.completed ? 'Completed' : 'Mark as Complete'}
+                    </button>
+                    <div class="lesson-nav">
+                        ${prevIdx !== null ? `<button class="btn-secondary" id="prev-lesson">Previous</button>` : ''}
+                        ${nextIdx !== null ? `<button class="btn-primary" id="next-lesson">Next Lesson</button>` : ''}
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('toggle-complete').addEventListener('click', async () => {
+                try {
+                    course = await api.courses.updateLesson(course.id, lesson.id, { completed: !lesson.completed });
+                    renderCourse();
+                } catch (e) {
+                    console.error('Failed to update lesson:', e);
+                }
+            });
+
+            const prevBtn = document.getElementById('prev-lesson');
+            const nextBtn = document.getElementById('next-lesson');
+            if (prevBtn) prevBtn.addEventListener('click', () => { currentLessonIdx = prevIdx; renderLessonList(); renderLessonContent(prevIdx); });
+            if (nextBtn) nextBtn.addEventListener('click', () => { currentLessonIdx = nextIdx; renderLessonList(); renderLessonContent(nextIdx); });
+        }
+
+        init();
+    </script>
+</body>
+</html>

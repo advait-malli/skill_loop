@@ -1,0 +1,854 @@
+{
+  "accounts": [
+    {
+      "id": "acc_1",
+      "username": "marcus_rivera",
+      "displayName": "Marcus Rivera",
+      "avatar": "MR",
+      "bio": "Guitar teacher and music enthusiast",
+      "password": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
+      "skillsOffered": [
+        "Guitar",
+        "Music Theory",
+        "Songwriting"
+      ],
+      "skillsWanted": [
+        "Photography",
+        "Video Editing"
+      ],
+      "subscribers": 12000,
+      "createdAt": "2024-01-15T10:00:00Z"
+    },
+    {
+      "id": "acc_2",
+      "username": "sarah_lee",
+      "displayName": "Sarah Lee",
+      "avatar": "SL",
+      "bio": "Portrait photographer",
+      "password": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
+      "skillsOffered": [
+        "Photography",
+        "Photo Editing",
+        "Lighting"
+      ],
+      "skillsWanted": [
+        "Guitar",
+        "Spanish"
+      ],
+      "subscribers": 8500,
+      "createdAt": "2024-02-20T10:00:00Z"
+    },
+    {
+      "id": "acc_3",
+      "username": "aisha_carter",
+      "displayName": "Aisha Carter",
+      "avatar": "AC",
+      "bio": "Chef and cooking instructor",
+      "password": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
+      "skillsOffered": [
+        "Italian Cooking",
+        "Baking",
+        "Meal Planning"
+      ],
+      "skillsWanted": [
+        "Spanish",
+        "Web Design"
+      ],
+      "subscribers": 15000,
+      "createdAt": "2024-03-10T10:00:00Z"
+    },
+    {
+      "id": "acc_4",
+      "username": "javier_diaz",
+      "displayName": "Javier Diaz",
+      "avatar": "JD",
+      "bio": "Language tutor specializing in Spanish",
+      "password": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
+      "skillsOffered": [
+        "Spanish",
+        "English",
+        "Conversation Practice"
+      ],
+      "skillsWanted": [
+        "Web Design",
+        "React"
+      ],
+      "subscribers": 9200,
+      "createdAt": "2024-04-05T10:00:00Z"
+    },
+    {
+      "id": "acc_5",
+      "username": "elena_petrova",
+      "displayName": "Elena Petrova",
+      "avatar": "EP",
+      "bio": "Yoga instructor and wellness coach",
+      "password": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
+      "skillsOffered": [
+        "Yoga",
+        "Meditation",
+        "Flexibility Training"
+      ],
+      "skillsWanted": [
+        "Piano",
+        "Guitar"
+      ],
+      "subscribers": 22000,
+      "createdAt": "2024-05-01T10:00:00Z"
+    },
+    {
+      "id": "acc_current",
+      "username": "alex_morgan",
+      "displayName": "Alex Morgan",
+      "avatar": "AM",
+      "bio": "Full-stack developer learning new skills",
+      "password": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
+      "skillsOffered": [
+        "Web Development",
+        "React",
+        "Node.js"
+      ],
+      "skillsWanted": [
+        "Spanish",
+        "Guitar",
+        "Photography"
+      ],
+      "subscribers": 3400,
+      "createdAt": "2024-06-15T10:00:00Z"
+    },
+    {
+      "id": "acc_1789041221418_11988",
+      "username": "advaitmalli",
+      "displayName": "Advait Malli",
+      "avatar": "AM",
+      "bio": "",
+      "password": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
+      "skillsOffered": [],
+      "skillsWanted": [],
+      "subscribers": 0,
+      "createdAt": "2026-09-10T11:53:41.418673Z",
+      "avatarUrl": "/uploads/file_1789053964478_67924.png"
+    }
+  ],
+  "posts": [
+    {
+      "id": "post_1789046138069_68162",
+      "authorId": "acc_1789041221418_11988",
+      "title": "IDK",
+      "body": "I said IDK",
+      "image": "/uploads/file_1789046129027_10810.png",
+      "files": [
+        {
+          "name": "icon.png",
+          "type": "png",
+          "icon": "image",
+          "path": "/uploads/file_1789046134613_36296.png",
+          "size": 22305
+        }
+      ],
+      "tags": [],
+      "likes": 0,
+      "likedBy": [],
+      "comments": [],
+      "createdAt": "2026-09-10T13:15:38.069463Z"
+    },
+    {
+      "id": "post_1789045405076_99265",
+      "authorId": "acc_1789041221418_11988",
+      "title": "index.html",
+      "body": "index.html is good",
+      "image": "/uploads/file_1789045392512_10786.png",
+      "files": [],
+      "tags": [],
+      "likes": 1,
+      "likedBy": [
+        "acc_1789041221418_11988"
+      ],
+      "comments": [],
+      "createdAt": "2026-09-10T13:03:25.076316Z"
+    },
+    {
+      "id": "post_1789045079560_53919",
+      "authorId": "acc_1789041221418_11988",
+      "title": "Course.html",
+      "body": "Course.html is a nice html file.",
+      "image": "https://placehold.co/640x360/1e293b/00EBA9?text=Course.html",
+      "files": [],
+      "tags": [],
+      "likes": 1,
+      "likedBy": [
+        "acc_1789041221418_11988"
+      ],
+      "comments": [],
+      "createdAt": "2026-09-10T12:57:59.561019Z"
+    },
+    {
+      "id": "post_1788965529999_3849",
+      "authorId": "acc_current",
+      "title": "gdsdgdg",
+      "body": "dgsgdssgd",
+      "image": "dgdgsdgsdgsgds",
+      "files": [
+        {
+          "name": "gdsdgsdgsdgsgds",
+          "type": "gdsdgsdgsdgsgds",
+          "icon": "insert_drive_file"
+        }
+      ],
+      "tags": [],
+      "likes": 0,
+      "likedBy": [],
+      "comments": [],
+      "createdAt": "2026-09-09T14:52:09.999726Z"
+    },
+    {
+      "id": "post_1",
+      "authorId": "acc_1",
+      "title": "Guitar Lesson for Beginners",
+      "body": "Offering guitar lessons for beginners! I can teach you chords, strumming patterns, and your favorite songs. Looking to learn photography basics in return.",
+      "image": "https://placehold.co/640x360/1e293b/00EBA9?text=Guitar+Lesson",
+      "files": [
+        {
+          "name": "Guitar_Chord_Chart.pdf",
+          "type": "pdf",
+          "icon": "description"
+        },
+        {
+          "name": "Practice_Riff.mp3",
+          "type": "audio",
+          "icon": "music_note"
+        }
+      ],
+      "tags": [
+        "music_note",
+        "camera"
+      ],
+      "likes": 24,
+      "likedBy": [],
+      "comments": [
+        {
+          "id": "c_1789041877987_15829",
+          "authorId": "acc_1789041221418_11988",
+          "body": "Yay!",
+          "createdAt": "2026-09-10T12:04:37.987940Z"
+        },
+        {
+          "id": "c1",
+          "authorId": "acc_2",
+          "body": "I can teach you portrait photography! Let's swap.",
+          "createdAt": "2024-07-10T10:00:00Z"
+        },
+        {
+          "id": "c2",
+          "authorId": "acc_3",
+          "body": "I'm interested in guitar lessons too!",
+          "createdAt": "2024-07-10T09:00:00Z"
+        },
+        {
+          "id": "c3",
+          "authorId": "acc_4",
+          "body": "Can I join the next session?",
+          "createdAt": "2024-07-10T08:00:00Z"
+        },
+        {
+          "id": "c4",
+          "authorId": "acc_5",
+          "body": "This is awesome! Would love to learn.",
+          "createdAt": "2024-07-10T06:00:00Z"
+        }
+      ],
+      "createdAt": "2024-07-10T12:00:00Z"
+    },
+    {
+      "id": "post_2",
+      "authorId": "acc_2",
+      "title": "Photography Workshops",
+      "body": "Sharing some of my latest portrait shots! I'm offering photography workshops. Looking for someone who can teach me guitar basics.",
+      "image": "https://placehold.co/640x360/1e293b/00EBA9?text=Photography+Portfolio",
+      "files": [
+        {
+          "name": "Portfolio_2024.zip",
+          "type": "archive",
+          "icon": "image"
+        },
+        {
+          "name": "Camera_Settings_Guide.pdf",
+          "type": "pdf",
+          "icon": "clipboard"
+        }
+      ],
+      "tags": [
+        "camera",
+        "music_note"
+      ],
+      "likes": 56,
+      "likedBy": [],
+      "comments": [
+        {
+          "id": "c6",
+          "authorId": "acc_1",
+          "body": "I can teach you guitar! When are you free?",
+          "createdAt": "2024-07-09T15:00:00Z"
+        },
+        {
+          "id": "c7",
+          "authorId": "acc_5",
+          "body": "Love these shots! What camera do you use?",
+          "createdAt": "2024-07-09T14:00:00Z"
+        }
+      ],
+      "createdAt": "2024-07-09T18:00:00Z"
+    },
+    {
+      "id": "post_3",
+      "authorId": "acc_3",
+      "title": "Italian Cooking Classes",
+      "body": "Made homemade pasta from scratch today! Teaching Italian cooking classes on weekends. Looking to learn Spanish in exchange. Who's interested?",
+      "image": "https://placehold.co/640x360/1e293b/00EBA9?text=Cooking+Class",
+      "files": [
+        {
+          "name": "Recipe_Book.pdf",
+          "type": "pdf",
+          "icon": "edit"
+        },
+        {
+          "name": "Pasta_Tutorial.mp4",
+          "type": "video",
+          "icon": "videocam"
+        },
+        {
+          "name": "Ingredient_List.docx",
+          "type": "document",
+          "icon": "shopping_cart"
+        }
+      ],
+      "tags": [
+        "restaurant",
+        "language"
+      ],
+      "likes": 89,
+      "likedBy": [],
+      "comments": [
+        {
+          "id": "c8",
+          "authorId": "acc_4",
+          "body": "I can teach you Spanish! Let's make a deal.",
+          "createdAt": "2024-07-08T10:00:00Z"
+        },
+        {
+          "id": "c9",
+          "authorId": "acc_6",
+          "body": "This looks delicious! Count me in.",
+          "createdAt": "2024-07-08T09:00:00Z"
+        }
+      ],
+      "createdAt": "2024-07-08T20:00:00Z"
+    },
+    {
+      "id": "post_4",
+      "authorId": "acc_4",
+      "title": "Spanish Conversation Practice",
+      "body": "Hola! Offering Spanish conversation practice for all levels. Looking for web design help for my portfolio site.",
+      "image": "https://placehold.co/640x360/1e293b/00EBA9?text=Spanish+Lesson",
+      "files": [
+        {
+          "name": "Spanish_Workbook.pdf",
+          "type": "pdf",
+          "icon": "menu_book"
+        },
+        {
+          "name": "Vocabulary_Audio.zip",
+          "type": "audio",
+          "icon": "headphones"
+        }
+      ],
+      "tags": [
+        "language",
+        "computer"
+      ],
+      "likes": 42,
+      "likedBy": [],
+      "comments": [
+        {
+          "id": "c10",
+          "authorId": "acc_6",
+          "body": "I can help with web design! Let's connect.",
+          "createdAt": "2024-07-07T12:00:00Z"
+        },
+        {
+          "id": "c11",
+          "authorId": "acc_5",
+          "body": "Great post! What levels do you teach?",
+          "createdAt": "2024-07-07T11:00:00Z"
+        }
+      ],
+      "createdAt": "2024-07-07T16:00:00Z"
+    },
+    {
+      "id": "post_5",
+      "authorId": "acc_5",
+      "title": "Morning Yoga Sessions",
+      "body": "Morning yoga session in the park! Offering virtual and in-person yoga classes. Looking for piano lessons for my daughter. Namaste!",
+      "image": "https://placehold.co/640x360/1e293b/00EBA9?text=Yoga+Session",
+      "files": [
+        {
+          "name": "Yoga_Routine_Guide.pdf",
+          "type": "pdf",
+          "icon": "clipboard"
+        },
+        {
+          "name": "Meditation_Music.mp3",
+          "type": "audio",
+          "icon": "music_note"
+        }
+      ],
+      "tags": [
+        "self_improvement",
+        "music_note"
+      ],
+      "likes": 134,
+      "likedBy": [],
+      "comments": [
+        {
+          "id": "c12",
+          "authorId": "acc_6",
+          "body": "I teach piano! How old is your daughter?",
+          "createdAt": "2024-07-06T08:00:00Z"
+        },
+        {
+          "id": "c13",
+          "authorId": "acc_2",
+          "body": "I've been wanting to try yoga. This is awesome!",
+          "createdAt": "2024-07-06T07:00:00Z"
+        }
+      ],
+      "createdAt": "2024-07-06T10:00:00Z"
+    }
+  ],
+  "courses": [
+    {
+      "id": "course_1",
+      "title": "UI/UX Design Fundamentals",
+      "instructor": "Sarah Johnson",
+      "instructorId": "acc_2",
+      "image": "https://placehold.co/800x400/1e293b/00EBA9?text=UI%2FUX+Design",
+      "status": "in-progress",
+      "totalLessons": 12,
+      "completedLessons": 11,
+      "progress": 92,
+      "description": "Learn the fundamentals of UI/UX design including user research, wireframing, prototyping, and usability testing.",
+      "lessons": [
+        {
+          "id": "l1_1",
+          "title": "What is UI/UX Design?",
+          "body": "UI (User Interface) focuses on the visual elements of a product \u2014 buttons, layouts, colors, and typography. UX (User Experience) is about how the product feels \u2014 the flow, accessibility, and satisfaction of using it. Together, they create products that are both beautiful and functional.\n\nIn this course, we'll cover the complete design process from research to high-fidelity prototypes.",
+          "order": 0,
+          "completed": true
+        },
+        {
+          "id": "l1_2",
+          "title": "User Research Methods",
+          "body": "Understanding your users is the foundation of great design. Key research methods include:\n\n- **Interviews**: One-on-one conversations to understand user needs and pain points\n- **Surveys**: Quantitative data from larger groups\n- **Observation**: Watching users interact with existing products\n- **Personas**: Fictional characters representing your target users\n- **Journey Maps**: Visualizing the user's experience over time\n\nThe goal is to build empathy and identify real problems to solve.",
+          "order": 1,
+          "completed": true
+        },
+        {
+          "id": "l1_3",
+          "title": "Wireframing Basics",
+          "body": "Wireframes are low-fidelity sketches of your interface. They focus on structure and layout, not visual design.\n\nKey principles:\n- Start with pen and paper for quick iteration\n- Use gray boxes for content placeholders\n- Focus on information hierarchy\n- Keep it simple \u2014 no colors, fonts, or images yet\n- Annotate interactions and edge cases\n\nTools: Figma, Sketch, Adobe XD, or even paper and pencil.",
+          "order": 2,
+          "completed": true
+        },
+        {
+          "id": "l1_4",
+          "title": "Color Theory for Interfaces",
+          "body": "Color is one of the most powerful tools in a designer's toolkit. It communicates hierarchy, status, brand identity, and emotion.\n\nThe 60-30-10 Rule:\n- 60% dominant color (background)\n- 30% secondary color (cards, sections)\n- 10% accent color (buttons, CTAs)\n\nAccessibility matters: Always ensure sufficient contrast ratios (4.5:1 for normal text, 3:1 for large text). Use tools like WebAIM Contrast Checker.",
+          "order": 3,
+          "completed": true
+        },
+        {
+          "id": "l1_5",
+          "title": "Typography Fundamentals",
+          "body": "Typography makes or breaks a design. Good typography guides the eye, creates hierarchy, and sets the tone.\n\nKey concepts:\n- **Font pairing**: Use 2 fonts max (one for headings, one for body)\n- **Scale**: Use a modular scale (e.g., 1.25x) for consistent sizing\n- **Line height**: 1.4\u20131.6 for body text\n- **Line length**: 50\u201375 characters per line is optimal\n- **Weight**: Use weight (bold/regular) for hierarchy, not size alone\n\nRecommended Google Fonts: Inter, Outfit, DM Sans, Plus Jakarta Sans.",
+          "order": 4,
+          "completed": true
+        },
+        {
+          "id": "l1_6",
+          "title": "Prototyping with Figma",
+          "body": "Prototypes bring your designs to life before writing any code. They let you test interactions and gather feedback early.\n\nFigma Prototype Features:\n- **Frames**: Artboards for each screen state\n- **Interactions**: Click, hover, and drag triggers\n- **Animations**: Smart animate for smooth transitions\n- **Components**: Reusable UI elements with variants\n- **Prototype links**: Connect frames to simulate navigation\n\nStart with low-fidelity click-through prototypes, then refine with animations.",
+          "order": 5,
+          "completed": true
+        },
+        {
+          "id": "l1_7",
+          "title": "Usability Testing",
+          "body": "Usability testing is watching real users try to complete tasks with your design. It's the fastest way to find problems.\n\nHow to run a test:\n1. Define 3\u20135 key tasks to test\nrecruit 5 users (5 tests find ~85% of issues)\n3. Give minimal instruction \u2014 let them figure it out\n4. Think aloud: Ask them to narrate their thoughts\n5. Observe, don't help\n6. Take notes on where they struggle\n\nTools: Maze, UserTesting, Hotjar, or even Zoom + screen share.",
+          "order": 6,
+          "completed": true
+        },
+        {
+          "id": "l1_8",
+          "title": "Design Systems",
+          "body": "A design system is a collection of reusable components, patterns, and guidelines that ensure consistency across a product.\n\nEssential components:\n- **Design tokens**: Colors, spacing, typography variables\n- **Component library**: Buttons, inputs, cards, modals\n- **Pattern library**: Form layouts, navigation, empty states\n- **Documentation**: Usage guidelines and examples\n\nWhy build one? It speeds up design, ensures consistency, and makes collaboration easier. Start small and grow organically.",
+          "order": 7,
+          "completed": true
+        },
+        {
+          "id": "l1_9",
+          "title": "Responsive Design",
+          "body": "Responsive design ensures your interface works on any screen size. With mobile traffic exceeding desktop, this is non-negotiable.\n\nApproaches:\n- **Mobile-first**: Design for mobile, then scale up\n- **Breakpoints**: Common breakpoints at 480px, 768px, 1024px, 1280px\n- **Flexible grids**: Use CSS Grid or Flexbox with relative units\n- **Fluid typography**: Use clamp() for responsive font sizes\n- **Touch targets**: Minimum 44x44px for tap targets\n\nTest on real devices, not just browser resize.",
+          "order": 8,
+          "completed": true
+        },
+        {
+          "id": "l1_10",
+          "title": "Handoff to Developers",
+          "body": "The design-to-dev handoff is where great designs either succeed or fail. Clear communication is key.\n\nWhat to include:\n- **Specs**: Exact sizes, spacing, and colors\n- **Assets**: Exported icons, images, and SVGs\n- **Interactions**: Documented behavior for each component\n- **Edge cases**: Empty states, errors, loading states\n- **Responsive behavior**: How layouts adapt\n\nFigma's Dev Mode makes this seamless. Annotate your designs and use auto-layout for spacing accuracy.",
+          "order": 9,
+          "completed": true
+        },
+        {
+          "id": "l1_11",
+          "title": "Portfolio Best Practices",
+          "body": "Your portfolio is your most important career asset. It should showcase your process, not just final screens.\n\nStructure each case study as:\n1. **Problem**: What challenge did you solve?\n2. **Process**: How did you approach it? (Research \u2192 Ideation \u2192 Design \u2192 Test)\n3. **Solution**: Show your designs with context\n4. **Impact**: What were the results? (Metrics, feedback)\n\nTips:\n- Show 3\u20135 of your best projects\n- Include failed experiments (shows growth mindset)\n- Write clearly \u2014 designers are communicators\n- Keep it updated with your latest work",
+          "order": 10,
+          "completed": true
+        },
+        {
+          "id": "l1_12",
+          "title": "Final Project: Design a Mobile App",
+          "body": "Put everything you've learned into practice. Design a complete mobile app from concept to high-fidelity prototype.\n\nYour deliverables:\n1. User persona and journey map\n2. Low-fidelity wireframes (5+ screens)\n3. Mood board and style guide\n4. High-fidelity mockups\n5. Interactive prototype in Figma\n6. Brief case study documenting your process\n\nChoose a real problem you care about. The best portfolios tell stories of meaningful work. Good luck!",
+          "order": 11,
+          "completed": false
+        }
+      ]
+    },
+    {
+      "id": "course_2",
+      "title": "React - Complete Guide",
+      "instructor": "Mark Davis",
+      "instructorId": "acc_1",
+      "image": "https://placehold.co/800x400/1e293b/00EBA9?text=React+Complete+Guide",
+      "status": "in-progress",
+      "totalLessons": 8,
+      "completedLessons": 7,
+      "progress": 88,
+      "description": "Master React from basics to advanced concepts including hooks, context, performance optimization, and testing.",
+      "lessons": [
+        {
+          "id": "l2_1",
+          "title": "Introduction to React",
+          "body": "React is a JavaScript library for building user interfaces, created by Meta. It uses a component-based architecture where you build encapsulated components that manage their own state.\n\nWhy React?\n- Declarative: Describe what the UI should look like\n- Component-based: Build encapsulated, reusable pieces\n- Learn once, write anywhere: React Native for mobile\n- Huge ecosystem: Libraries for everything\n\nSetup: Create a new app with `npx create-react-app my-app` or use Vite for faster builds.",
+          "order": 0,
+          "completed": true
+        },
+        {
+          "id": "l2_2",
+          "title": "JSX and Components",
+          "body": "JSX is a syntax extension that looks like HTML but compiles to JavaScript function calls.\n\n```jsx\nfunction Greeting({ name }) {\n  return <h1>Hello, {name}!</h1>;\n}\n```\n\nKey rules:\n- JSX must return a single root element (use fragments `<>...</>` for multiple)\n- Use `className` instead of `class`\n- JavaScript expressions in curly braces `{}`\n- Components must be PascalCase\n- Always close self-closing tags (`<img />`)",
+          "order": 1,
+          "completed": true
+        },
+        {
+          "id": "l2_3",
+          "title": "Props and State",
+          "body": "**Props** are read-only data passed from parent to child:\n```jsx\n<Greeting name=\"Alice\" age={25} />\n```\n\n**State** is mutable data managed within a component:\n```jsx\nconst [count, setCount] = useState(0);\n```\n\nGolden rules:\n- Never modify props directly\n- State updates trigger re-renders\n- State should be lifted up when siblings need it\n- Use the functional form of setState when new state depends on old: `setCount(prev => prev + 1)`",
+          "order": 2,
+          "completed": true
+        },
+        {
+          "id": "l2_4",
+          "title": "useEffect and Side Effects",
+          "body": "`useEffect` lets you perform side effects in functional components:\n\n```jsx\nuseEffect(() => {\n  document.title = `Count: ${count}`;\n  return () => cleanup(); // cleanup function\n}, [count]); // dependency array\n```\n\nDependency array behavior:\n- No array: Runs after every render\n- Empty array `[]`: Runs once on mount\n- With deps `[a, b]`: Runs when a or b change\n\nCommon patterns:\n- Data fetching\n- Subscriptions (WebSocket, event listeners)\n- DOM manipulation\n- Timer management",
+          "order": 3,
+          "completed": true
+        },
+        {
+          "id": "l2_5",
+          "title": "Handling Events and Forms",
+          "body": "Event handling in React uses camelCase naming:\n\n```jsx\n<button onClick={handleClick}>Click me</button>\n<input onChange={handleChange} value={text} />\n```\n\nForm handling patterns:\n- **Controlled components**: React state drives form values\n- **Uncontrolled components**: DOM manages form values (useRef)\n- **Form validation**: Validate on submit, show errors inline\n\nFor complex forms, consider libraries like React Hook Form for better performance and DX.",
+          "order": 4,
+          "completed": true
+        },
+        {
+          "id": "l2_6",
+          "title": "React Router",
+          "body": "React Router enables navigation in single-page applications:\n\n```jsx\nimport { BrowserRouter, Routes, Route, Link } from 'react-router-dom';\n\n<BrowserRouter>\n  <nav><Link to=\"/\">Home</Link></nav>\n  <Routes>\n    <Route path=\"/\" element={<Home />} />\n    <Route path=\"/about\" element={<About />} />\n  </Routes>\n</BrowserRouter>\n```\n\nKey concepts:\n- `<Routes>` and `<Route>` define your route tree\n- `useParams()` to access URL parameters\n- `useNavigate()` for programmatic navigation\n- `useSearchParams()` for query strings\n- Nested routes with `<Outlet />`",
+          "order": 5,
+          "completed": true
+        },
+        {
+          "id": "l2_7",
+          "title": "Context API and useReducer",
+          "body": "Context provides a way to pass data through the component tree without props drilling:\n\n```jsx\nconst ThemeContext = createContext('light');\n\nfunction App() {\n  return (\n    <ThemeContext.Provider value=\"dark\">\n      <Child />\n    </ThemeContext.Provider>\n  );\n}\n\nfunction Child() {\n  const theme = useContext(ThemeContext);\n}\n```\n\nFor complex state logic, combine with `useReducer`:\n```jsx\nconst [state, dispatch] = useReducer(reducer, initialState);\n```\n\nThis gives you Redux-like patterns without the library.",
+          "order": 6,
+          "completed": true
+        },
+        {
+          "id": "l2_8",
+          "title": "Custom Hooks",
+          "body": "Custom hooks extract reusable stateful logic from components:\n\n```jsx\nfunction useLocalStorage(key, initialValue) {\n  const [value, setValue] = useState(() => {\n    const stored = localStorage.getItem(key);\n    return stored ? JSON.parse(stored) : initialValue;\n  });\n\n  useEffect(() => {\n    localStorage.setItem(key, JSON.stringify(value));\n  }, [key, value]);\n\n  return [value, setValue];\n}\n```\n\nNaming convention: Must start with `use`\n\nCommon custom hooks:\n- `useFetch(url)` \u2014 Data fetching\n- `useDebounce(value, delay)` \u2014 Input debouncing\n- `useToggle()` \u2014 Boolean state toggle\n- `useClickOutside(ref, handler)` \u2014 Click outside detection",
+          "order": 7,
+          "completed": false
+        }
+      ]
+    },
+    {
+      "id": "course_3",
+      "title": "Python for Beginners",
+      "instructor": "Lisa Wang",
+      "instructorId": "acc_3",
+      "image": "https://placehold.co/800x400/1e293b/00EBA9?text=Python+Beginners",
+      "status": "completed",
+      "totalLessons": 8,
+      "completedLessons": 8,
+      "progress": 100,
+      "description": "Complete Python course covering basics, OOP, data structures, file handling, and real-world projects.",
+      "lessons": [
+        {
+          "id": "l3_1",
+          "title": "Getting Started with Python",
+          "body": "Python is a high-level, interpreted language known for its readability and versatility. It's used in web development, data science, AI, automation, and more.\n\nSetup:\n1. Install Python from python.org\n2. Use VS Code with the Python extension\n3. Run your first script: `print('Hello, World!')`\n\nPython uses indentation (4 spaces) for code blocks instead of braces. This enforces clean, readable code.",
+          "order": 0,
+          "completed": true
+        },
+        {
+          "id": "l3_2",
+          "title": "Variables and Data Types",
+          "body": "Python is dynamically typed \u2014 you don't declare variable types:\n\n```python\nname = \"Alice\"       # str\nage = 25              # int\ngpa = 3.9             # float\nis_student = True     # bool\n```\n\nKey operations:\n- String formatting: `f\"Hello, {name}!\"`\n- Type checking: `type(variable)`\n- Type conversion: `int(\"42\")`, `str(42)`\n- f-strings are preferred over `.format()` or `%`",
+          "order": 1,
+          "completed": true
+        },
+        {
+          "id": "l3_3",
+          "title": "Control Flow",
+          "body": "Conditionals:\n```python\nif score >= 90:\n    grade = \"A\"\nelif score >= 80:\n    grade = \"B\"\nelse:\n    grade = \"C\"\n```\n\nLoops:\n```python\nfor i in range(5):     # 0, 1, 2, 3, 4\n    print(i)\n\nwhile x > 0:\n    x -= 1\n```\n\nUseful patterns:\n- `enumerate()` for index + value\n- `zip()` for parallel iteration\n- List comprehensions: `[x**2 for x in range(10)]`",
+          "order": 2,
+          "completed": true
+        },
+        {
+          "id": "l3_4",
+          "title": "Lists and Dictionaries",
+          "body": "**Lists** (ordered, mutable):\n```python\nfruits = [\"apple\", \"banana\", \"cherry\"]\nfruits.append(\"date\")\nfruits[0]  # \"apple\"\n```\n\n**Dictionaries** (key-value pairs):\n```python\nperson = {\"name\": \"Alice\", \"age\": 25}\nperson[\"name\"]  # \"Alice\"\nperson.get(\"email\", \"N/A\")  # default value\n```\n\n**Tuples** (ordered, immutable):\n```python\npoint = (3, 4)\n```\n\n**Sets** (unique values):\n```python\nunique = {1, 2, 3, 2}  # {1, 2, 3}\n```",
+          "order": 3,
+          "completed": true
+        },
+        {
+          "id": "l3_5",
+          "title": "Functions",
+          "body": "Functions encapsulate reusable logic:\n\n```python\ndef greet(name, greeting=\"Hello\"):\n    \"\"\"Greet someone.\"\"\"\n    return f\"{greeting}, {name}!\"\n```\n\nKey concepts:\n- Default parameters (must come last)\n- `*args` and `**kwargs` for flexible arguments\n- Lambda functions: `square = lambda x: x**2`\n- Docstrings for documentation\n- Type hints: `def add(a: int, b: int) -> int:`\n\nHigher-order functions:\n- `map()`, `filter()`, `sorted()` with key functions",
+          "order": 4,
+          "completed": true
+        },
+        {
+          "id": "l3_6",
+          "title": "Object-Oriented Programming",
+          "body": "OOP organizes code into classes and objects:\n\n```python\nclass Dog:\n    def __init__(self, name, breed):\n        self.name = name\n        self.breed = breed\n\n    def bark(self):\n        return f\"{self.name} says Woof!\"\n\nmy_dog = Dog(\"Rex\", \"Labrador\")\n```\n\nKey concepts:\n- **Encapsulation**: Bundle data and methods together\n- **Inheritance**: `class Puppy(Dog):`\n- **Polymorphism**: Same method, different behavior\n- **Magic methods**: `__str__`, `__len__`, `__eq__`",
+          "order": 5,
+          "completed": true
+        },
+        {
+          "id": "l3_7",
+          "title": "File Handling",
+          "body": "Python makes file I/O straightforward:\n\n```python\n# Reading\nwith open(\"data.txt\", \"r\") as f:\n    content = f.read()\n\n# Writing\nwith open(\"output.txt\", \"w\") as f:\n    f.write(\"Hello, World!\")\n\n# CSV\nimport csv\nwith open(\"data.csv\") as f:\n    reader = csv.DictReader(f)\n    for row in reader:\n        print(row[\"name\"])\n```\n\nAlways use `with` statements \u2014 they handle file closing automatically.",
+          "order": 6,
+          "completed": true
+        },
+        {
+          "id": "l3_8",
+          "title": "Error Handling",
+          "body": "Graceful error handling prevents crashes:\n\n```python\ntry:\n    result = 10 / 0\nexcept ZeroDivisionError as e:\n    print(f\"Error: {e}\")\nexcept Exception as e:\n    print(f\"Unexpected: {e}\")\nelse:\n    print(\"No errors\")\nfinally:\n    print(\"Always runs\")\n```\n\nBest practices:\n- Catch specific exceptions, not broad `Exception`\n- Use custom exceptions for your domain\n- Log errors, don't silently ignore them\n- EAFP: Easier to Ask Forgiveness than Permission",
+          "order": 7,
+          "completed": true
+        }
+      ]
+    },
+    {
+      "id": "course_4",
+      "title": "Data Science with R",
+      "instructor": "James Miller",
+      "instructorId": "acc_4",
+      "image": "https://placehold.co/800x400/1e293b/00EBA9?text=Data+Science+R",
+      "status": "in-progress",
+      "totalLessons": 4,
+      "completedLessons": 2,
+      "progress": 50,
+      "description": "Learn data science with R including data visualization, statistical analysis, and machine learning basics.",
+      "lessons": [
+        {
+          "id": "l4_1",
+          "title": "Introduction to R",
+          "body": "R is a language and environment designed for statistical computing and graphics. It's widely used in academia and industry for data analysis.\n\nWhy R?\n- Powerful statistical capabilities\n- Excellent visualization with ggplot2\n- Rich ecosystem of packages (CRAN)\n- RStudio provides a fantastic IDE\n- Strong community support\n\nInstall R and RStudio, then try: `print('Hello, Data!')`",
+          "order": 0,
+          "completed": true
+        },
+        {
+          "id": "l4_2",
+          "title": "Data Structures in R",
+          "body": "R's core data structures:\n\n- **Vectors**: `x <- c(1, 2, 3)` \u2014 the basic building block\n- **Matrices**: `m <- matrix(1:9, nrow=3)` \u2014 2D numeric data\n- **Lists**: `l <- list(name=\"Alice\", age=25)` \u2014 mixed types\n- **Data Frames**: `df <- data.frame(x=1:3, y=c(\"a\",\"b\",\"c\"))` \u2014 the workhorse\n\nData frames are like spreadsheets in code. Each column is a vector, and columns can have different types.",
+          "order": 1,
+          "completed": true
+        },
+        {
+          "id": "l4_3",
+          "title": "Data Manipulation with dplyr",
+          "body": "dplyr is the go-to package for data manipulation:\n\n```r\nlibrary(dplyr)\n\ndf %>%\n  filter(age > 25) %>%          # rows\n  select(name, score) %>%        # columns\n  mutate(grade = score / 10) %>% # new columns\n  arrange(desc(score)) %>%       # sorting\n  group_by(category) %>%         # grouping\n  summarize(avg = mean(score))   # aggregation\n```\n\nThe pipe operator `%>%` chains operations left-to-right, making code readable.",
+          "order": 2,
+          "completed": false
+        },
+        {
+          "id": "l4_4",
+          "title": "Data Visualization with ggplot2",
+          "body": "ggplot2 implements the Grammar of Graphics for building plots layer by layer:\n\n```r\nlibrary(ggplot2)\n\nggplot(df, aes(x = age, y = score, color = category)) +\n  geom_point(size = 3) +\n  geom_smooth(method = \"lm\") +\n  labs(title = \"Score vs Age\", x = \"Age\", y = \"Score\") +\n  theme_minimal()\n```\n\nKey geoms:\n- `geom_point()` \u2014 scatter plots\n- `geom_bar()` / `geom_col()` \u2014 bar charts\n- `geom_line()` \u2014 line charts\n- `geom_boxplot()` \u2014 box plots\n- `geom_histogram()` \u2014 histograms",
+          "order": 3,
+          "completed": false
+        }
+      ]
+    },
+    {
+      "id": "course_5",
+      "title": "Docker and Kubernetes",
+      "instructor": "Alex Thompson",
+      "instructorId": "acc_5",
+      "image": "https://placehold.co/800x400/1e293b/00EBA9?text=Docker+%26+K8s",
+      "status": "not-started",
+      "totalLessons": 3,
+      "completedLessons": 0,
+      "progress": 0,
+      "description": "Container orchestration with Docker and Kubernetes for scalable deployments.",
+      "lessons": [
+        {
+          "id": "l5_1",
+          "title": "Why Containers?",
+          "body": "Containers solve the 'it works on my machine' problem by packaging your app with all its dependencies.\n\n**VMs vs Containers:**\n- VMs include a full OS (heavy, slow to start)\n- Containers share the host OS kernel (lightweight, fast)\n- A container starts in milliseconds vs minutes for VMs\n\n**Key benefits:**\n- Consistency across environments\n- Isolation between applications\n- Easy scaling and deployment\n- Efficient resource usage\n\nDocker is the most popular container runtime. Let's install it and run our first container.",
+          "order": 0,
+          "completed": false
+        },
+        {
+          "id": "l5_2",
+          "title": "Docker Basics",
+          "body": "Essential Docker commands:\n\n```bash\n# Run a container\ndocker run -d -p 8080:80 nginx\n\n# List containers\ndocker ps\n\n# Build an image\ndocker build -t myapp .\n\n# Stop/remove\ndocker stop <id>\ndocker rm <id>\n```\n\n**Dockerfile anatomy:**\n```dockerfile\nFROM node:18-alpine\nWORKDIR /app\nCOPY package*.json ./\nRUN npm install\nCOPY . .\nEXPOSE 3000\nCMD [\"node\", \"server.js\"]\n```\n\nEach instruction creates a layer. Layers are cached for faster rebuilds.",
+          "order": 1,
+          "completed": false
+        },
+        {
+          "id": "l5_3",
+          "title": "Docker Compose",
+          "body": "Docker Compose manages multi-container applications:\n\n```yaml\nversion: '3.8'\nservices:\n  web:\n    build: .\n    ports:\n      - \"3000:3000\"\n    depends_on:\n      - db\n  db:\n    image: postgres:15\n    environment:\n      POSTGRES_PASSWORD: secret\n    volumes:\n      - pgdata:/var/lib/postgresql/data\n\nvolumes:\n  pgdata:\n```\n\nCommands:\n- `docker compose up` \u2014 Start all services\n- `docker compose down` \u2014 Stop and remove\n- `docker compose logs` \u2014 View logs\n- `docker compose exec web sh` \u2014 Shell into container",
+          "order": 2,
+          "completed": false
+        }
+      ]
+    },
+    {
+      "id": "course_6",
+      "title": "Flutter Mobile Development",
+      "instructor": "Priya Patel",
+      "instructorId": "acc_1",
+      "image": "https://placehold.co/800x400/1e293b/00EBA9?text=Flutter+Mobile",
+      "status": "not-started",
+      "totalLessons": 3,
+      "completedLessons": 0,
+      "progress": 0,
+      "description": "Build beautiful cross-platform mobile apps with Flutter and Dart.",
+      "lessons": [
+        {
+          "id": "l6_1",
+          "title": "Introduction to Flutter",
+          "body": "Flutter is Google's UI toolkit for building natively compiled applications for mobile, web, and desktop from a single codebase.\n\nWhy Flutter?\n- Single codebase for iOS and Android\n- Hot reload for instant development feedback\n- Rich widget library\n- Customizable with Material Design and Cupertino widgets\n- Growing ecosystem and community\n\nSetup: Install Flutter SDK, Android Studio or VS Code, and run `flutter doctor`.",
+          "order": 0,
+          "completed": false
+        },
+        {
+          "id": "l6_2",
+          "title": "Dart Language Essentials",
+          "body": "Dart is the language behind Flutter. Key features:\n\n```dart\n// Variables\nvar name = 'Alice';          // inferred type\nString greeting = 'Hello';   // explicit type\nfinal id = 42;               // runtime constant\nconst pi = 3.14;             // compile-time constant\n\n// Null safety\nString? nullableName;         // can be null\nString nonNullName = 'Bob';   // cannot be null\n\n// Functions\nint add(int a, int b) => a + b;  // arrow syntax\n```\n\nDart is strongly typed with sound null safety, making your code more reliable.",
+          "order": 1,
+          "completed": false
+        },
+        {
+          "id": "l6_3",
+          "title": "Widgets and Layouts",
+          "body": "Everything in Flutter is a widget. Widgets are composable UI building blocks.\n\n```dart\n@override\nWidget build(BuildContext context) {\n  return Scaffold(\n    appBar: AppBar(title: Text('My App')),\n    body: Center(\n      child: Column(\n        mainAxisAlignment: MainAxisAlignment.center,\n        children: [\n          Text('Hello!'),\n          ElevatedButton(\n            onPressed: () {},\n            child: Text('Click Me'),\n          ),\n        ],\n      ),\n    ),\n  );\n}\n```\n\nKey layout widgets:\n- `Row` / `Column` \u2014 linear layouts\n- `Stack` \u2014 overlapping children\n- `ListView` \u2014 scrollable lists\n- `GridView` \u2014 grid layouts\n- `Container` \u2014 box model styling",
+          "order": 2,
+          "completed": false
+        }
+      ]
+    },
+    {
+      "id": "course_7",
+      "title": "Cybersecurity Basics",
+      "instructor": "Robert Garcia",
+      "instructorId": "acc_2",
+      "image": "https://placehold.co/800x400/1e293b/00EBA9?text=Cybersecurity",
+      "status": "not-started",
+      "totalLessons": 3,
+      "completedLessons": 0,
+      "progress": 0,
+      "description": "Fundamentals of cybersecurity including network security, cryptography, and ethical hacking.",
+      "lessons": [
+        {
+          "id": "l7_1",
+          "title": "The Cybersecurity Landscape",
+          "body": "Cybersecurity is the practice of protecting systems, networks, and data from digital attacks.\n\n**Common threats:**\n- **Phishing**: Deceptive emails/messages to steal credentials\n- **Malware**: Viruses, ransomware, spyware\n- **Social Engineering**: Manipulating people into breaking security\n- **DDoS**: Overwhelming systems with traffic\n- **Zero-day**: Exploits for unknown vulnerabilities\n\n**CIA Triad:**\n- **Confidentiality**: Only authorized access\n- **Integrity**: Data isn't tampered with\n- **Availability**: Systems are accessible when needed",
+          "order": 0,
+          "completed": false
+        },
+        {
+          "id": "l7_2",
+          "title": "Network Security Fundamentals",
+          "body": "Understanding network security is essential for protecting data in transit.\n\n**Key concepts:**\n- **Firewalls**: Filter network traffic based on rules\n- **VPN**: Encrypt traffic between endpoints\n- **DNS Security**: Prevent DNS poisoning and hijacking\n- **Network segmentation**: Isolate sensitive systems\n\n**TCP/IP basics:**\n- Three-way handshake: SYN \u2192 SYN-ACK \u2192 ACK\n- Ports: 80 (HTTP), 443 (HTTPS), 22 (SSH), 3306 (MySQL)\n- OSI Model: Physical \u2192 Data Link \u2192 Network \u2192 Transport \u2192 Session \u2192 Presentation \u2192 Application\n\nTools: Wireshark for packet analysis, Nmap for port scanning.",
+          "order": 1,
+          "completed": false
+        },
+        {
+          "id": "l7_3",
+          "title": "Cryptography Essentials",
+          "body": "Cryptography is the foundation of information security.\n\n**Symmetric encryption:**\n- Same key to encrypt and decrypt\n- Fast: AES-256, ChaCha20\n- Key distribution is the challenge\n\n**Asymmetric encryption:**\n- Public/private key pair\n- Slower: RSA, ECC\n- Used for key exchange and digital signatures\n\n**Hashing:**\n- One-way transformation\n- SHA-256, bcrypt for passwords\n- Used for integrity verification\n\n**TLS/SSL:**\n- Combines asymmetric (key exchange) + symmetric (data transfer)\n- HTTPS = HTTP + TLS\n- Always use HTTPS for web traffic",
+          "order": 2,
+          "completed": false
+        }
+      ]
+    },
+    {
+      "id": "course_1789053858008_21854",
+      "title": "IDK",
+      "instructor": "Advait Malli",
+      "instructorId": "acc_1789041221418_11988",
+      "image": "/uploads/file_1789053843767_22546.png",
+      "description": "This is a course about IDK",
+      "lessons": [
+        {
+          "id": "l_1789053858008_78819",
+          "title": "vdavdsavds",
+          "body": "dsvavdsvsddvsa",
+          "order": 0,
+          "completed": true
+        },
+        {
+          "id": "l_1789053858008_30768",
+          "title": "vdsadsvdvas",
+          "body": "vdsavdsadsva",
+          "order": 1,
+          "completed": false
+        }
+      ],
+      "totalLessons": 2,
+      "completedLessons": 1,
+      "progress": 50,
+      "status": "in-progress"
+    }
+  ],
+  "sessions": [
+    {
+      "id": "sess_1789041844040_47225",
+      "accountId": "acc_1789041221418_11988",
+      "createdAt": "2026-09-10T12:04:04.040453Z"
+    },
+    {
+      "id": "sess_1789050357736_13029",
+      "accountId": "acc_1789041221418_11988",
+      "createdAt": "2026-09-10T14:25:57.736240Z"
+    }
+  ]
+}

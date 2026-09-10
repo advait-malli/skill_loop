@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Skill Loop</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="theme.js"></script>
+</head>
+<body>
+    <div class="page-content">
+        <div class="video-grid" id="posts-grid"></div>
+    </div>
+
+    <script type="module">
+        import { api, renderPostCard } from './api.js';
+
+        let currentUserId = null;
+
+        async function init() {
+            try {
+                const user = await api.accounts.getCurrent();
+                currentUserId = user.id;
+                loadPosts();
+            } catch (e) {
+                console.error('Failed to load user:', e);
+                loadPosts();
+            }
+        }
+
+        async function loadPosts() {
+            const grid = document.getElementById('posts-grid');
+            grid.innerHTML = '<div class="loading">Loading posts...</div>';
+            try {
+                const posts = await api.posts.getAll({ limit: 20 });
+                grid.innerHTML = '';
+                posts.forEach(post => {
+                    const card = renderPostCard(post, currentUserId);
+                    grid.appendChild(card);
+                });
+                attachEventListeners();
+            } catch (e) {
+                console.error('Failed to load posts:', e);
+                grid.innerHTML = '<div class="error">Failed to load posts</div>';
+            }
+        }
+
+        function attachEventListeners() {
+            document.querySelectorAll('[data-action="like"]').forEach(btn => {
+                btn.addEventListener('click', async (e) => {
+                    e.stopPropagation();
+                    const postId = btn.dataset.postId;
+                    try {
+                        const result = await api.posts.like(postId, currentUserId);
+                        const countEl = btn.querySelector('.like-count');
+                        const icon = btn.querySelector('.like-icon');
+                        countEl.textContent = result.likes;
+                        btn.classList.toggle('liked', result.liked);
+                        icon.classList.toggle('filled', result.liked);
+                    } catch (err) {
+                        console.error('Like failed:', err);
+                    }
+                });
+            });
+
+            document.querySelectorAll('[data-action="comments"]').forEach(btn => {
+                btn.addEventListener('click', async (e) => {
+                    e.stopPropagation();
+                    const card = btn.closest('.post-card');
+                    const commentsEl = card.querySelector('.post-comments');
+                    const isOpen = commentsEl.style.display !== 'none';
+                    if (isOpen) {
+                        commentsEl.style.display = 'none';
+                        return;
+                    }
+                    const postId = btn.dataset.postId;
+                    try {
+                        const post = await api.posts.get(postId);
+                        renderComments(commentsEl, post.comments || []);
+                        commentsEl.style.display = 'block';
+                    } catch (err) {
+                        console.error('Failed to load comments:', err);
+                    }
+                });
+            });
+
+            document.querySelectorAll('[data-action="share"]').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const postId = btn.dataset.postId;
+                    navigator.clipboard.writeText(window.location.origin + '/watch.html?id=' + postId);
+                    alert('Link copied to clipboard!');
+                });
+            });
+
+            document.querySelectorAll('[data-action="open"]').forEach(openEl => {
+                openEl.addEventListener('click', () => {
+                    window.location.href = `watch.html?id=${openEl.dataset.postId}`;
+                });
+            });
+        }
+
+        function renderComments(container, comments) {
+            container.innerHTML = comments.map(c => `
+                <div class="comment">
+                    <div class="avatar small">${c.author?.avatarUrl ? `<img src="${c.author.avatarUrl}" alt="">` : (c.author?.avatar || '?')}</div>
+                    <div class="comment-body">
+                        <strong>${c.author?.displayName || 'Unknown'}</strong>
+                        <p>${c.body}</p>
+                        <span class="comment-time">${formatTimeAgo(c.createdAt)}</span>
+                    </div>
+                </div>
+            `).join('') + `
+                <div class="comment-input">
+                    <div class="avatar small">${currentUserId ? 'AM' : '?'}</div>
+                    <input type="text" placeholder="Add a comment..." data-post-id="${container.closest('.post-card')?.querySelector('[data-post-id]')?.dataset.postId}">
+                </div>
+            `;
+
+            container.querySelector('.comment-input input')?.addEventListener('keypress', async (e) => {
+                if (e.key === 'Enter' && e.target.value.trim()) {
+                    const postId = e.target.dataset.postId;
+                    try {
+                        await api.posts.addComment(postId, { authorId: currentUserId, body: e.target.value.trim() });
+                        e.target.value = '';
+                        const post = await api.posts.get(postId);
+                        renderComments(container, post.comments || []);
+                    } catch (err) {
+                        console.error('Comment failed:', err);
+                    }
+                }
+            });
+        }
+
+        function formatTimeAgo(dateString) {
+            const date = new Date(dateString);
+            const now = new Date();
+            const seconds = Math.floor((now - date) / 1000);
+            const minutes = Math.floor(seconds / 60);
+            const hours = Math.floor(minutes / 60);
+            const days = Math.floor(hours / 24);
+            if (seconds < 60) return 'just now';
+            if (minutes < 60) return `${minutes}m ago`;
+            if (hours < 24) return `${hours}h ago`;
+            if (days < 7) return `${days}d ago`;
+            return date.toLocaleDateString();
+        }
+
+        init();
+    </script>
+
+    <button class="fab" onclick="window.location.href='create.html'" aria-label="Create new post">
+        <span class="material-symbols-outlined">add</span>
+    </button>
+</body>
+</html>
