@@ -22,6 +22,12 @@
             </div>
         </div>
 
+        <div class="search-bar" role="search">
+            <span class="material-symbols-outlined search-icon">search</span>
+            <input type="search" id="search-input" placeholder="Search courses..." aria-label="Search courses">
+            <button class="icon-btn icon-btn-sm search-clear" id="search-clear" title="Clear search" aria-label="Clear search"><span class="material-symbols-outlined">close</span></button>
+        </div>
+
         <div class="course-grid" id="courses-grid">
             <div class="loading">Loading courses...</div>
         </div>
@@ -31,18 +37,27 @@
         import { api, renderCourseCard } from './api.js';
 
         let allCourses = [];
+        let activeFilter = 'in-progress,completed';
+        let searchTimer = null;
 
         async function loadCourses() {
             try {
                 allCourses = await api.courses.getAll();
-                renderFiltered('in-progress,completed');
+                renderFiltered(activeFilter, '');
             } catch (e) {
                 console.error('Failed to load courses:', e);
                 document.getElementById('courses-grid').innerHTML = '<div class="error">Failed to load courses</div>';
             }
         }
 
-        function renderFiltered(filter) {
+        function matchesQuery(course, query) {
+            const terms = query.trim().toLowerCase().split(/\s+/).filter(Boolean);
+            if (terms.length === 0) return true;
+            const haystack = [course.title || '', course.instructor || ''].join(' ').toLowerCase();
+            return terms.every(term => haystack.includes(term));
+        }
+
+        function renderFiltered(filter, query = '') {
             const grid = document.getElementById('courses-grid');
             grid.innerHTML = '';
             let filtered;
@@ -53,8 +68,11 @@
                 filtered = allCourses.filter(c => statuses.includes(c.status));
             }
 
+            const term = query.trim();
+            filtered = filtered.filter(c => matchesQuery(c, query));
+
             if (filtered.length === 0) {
-                grid.innerHTML = '<div class="empty-state"><span class="material-symbols-outlined" style="font-size:48px;color:var(--text-muted)">school</span><p>No courses found</p></div>';
+                grid.innerHTML = '<div class="empty-state"><span class="material-symbols-outlined" style="font-size:48px;color:var(--text-muted)">search_off</span><p>No courses found' + (term ? ' for "' + term + '"' : '') + '</p></div>';
                 return;
             }
 
@@ -64,12 +82,31 @@
             });
         }
 
+        const searchInput = document.getElementById('search-input');
+        const searchClear = document.getElementById('search-clear');
+
         document.querySelectorAll('.learn-tab').forEach(tab => {
             tab.addEventListener('click', () => {
                 document.querySelectorAll('.learn-tab').forEach(t => t.classList.remove('active'));
                 tab.classList.add('active');
-                renderFiltered(tab.dataset.filter);
+                activeFilter = tab.dataset.filter;
+                renderFiltered(activeFilter, searchInput.value);
             });
+        });
+
+        searchInput.addEventListener('input', () => {
+            clearTimeout(searchTimer);
+            searchTimer = setTimeout(() => {
+                searchClear.classList.toggle('visible', searchInput.value.trim().length > 0);
+                renderFiltered(activeFilter, searchInput.value);
+            }, 150);
+        });
+
+        searchClear.addEventListener('click', () => {
+            searchInput.value = '';
+            searchClear.classList.remove('visible');
+            renderFiltered(activeFilter, '');
+            searchInput.focus();
         });
 
         loadCourses();

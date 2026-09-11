@@ -13,7 +13,7 @@
 </head>
 <body>
     <div class="page-content">
-        <a href="home.html" class="home-btn"><span class="material-symbols-outlined">arrow_back</span> Home</a>
+        <a href="home.html" class="btn btn-ghost btn-back"><span class="material-symbols-outlined">arrow_back</span> Home</a>
 
         <div id="watch-main">
             <div class="loading">Loading post...</div>
@@ -76,7 +76,7 @@
                             <span>${post.comments?.length || 0} comments</span>
                         </div>
                         <div class="post-hero-actions">
-                            <button class="action-chip" id="like-btn" data-liked="${isLiked}"><span class="material-symbols-outlined">${isLiked ? 'favorite' : 'favorite_border'}</span> ${post.likes || 0}</button>
+                            <button class="action-chip" id="like-btn" data-liked="${isLiked}"><span class="material-symbols-outlined ${isLiked ? 'filled' : ''}">favorite</span> ${post.likes || 0}</button>
                         </div>
                     </div>
                 </div>
@@ -116,7 +116,7 @@
                     const result = await api.posts.like(postId, currentUserId);
                     const btn = document.getElementById('like-btn');
                     btn.dataset.liked = result.liked;
-                    btn.innerHTML = `<span class="material-symbols-outlined">${result.liked ? 'favorite' : 'favorite_border'}</span> ${result.likes}`;
+                    btn.innerHTML = `<span class="material-symbols-outlined ${result.liked ? 'filled' : ''}">favorite</span> ${result.likes}`;
                 } catch (err) {
                     console.error('Like failed:', err);
                 }

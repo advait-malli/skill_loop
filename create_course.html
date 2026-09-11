@@ -13,7 +13,7 @@
 </head>
 <body>
     <div class="page-content">
-        <a href="learn.html" class="home-btn"><span class="material-symbols-outlined">arrow_back</span> Courses</a>
+        <a href="learn.html" class="btn btn-ghost btn-back"><span class="material-symbols-outlined">arrow_back</span> Courses</a>
         <h1>Create a Course</h1>
         <div class="create-layout">
             <div class="create-field">
@@ -120,7 +120,7 @@
                 div.innerHTML = `
                     <div class="lesson-editor-header">
                         <span class="lesson-editor-num">Lesson ${i + 1}</span>
-                        <button class="lesson-remove-btn" data-idx="${i}" type="button">
+                        <button class="icon-btn icon-btn-danger" data-idx="${i}" type="button">
                             <span class="material-symbols-outlined">close</span>
                         </button>
                     </div>
@@ -130,7 +130,7 @@
                 builder.appendChild(div);
             });
 
-            builder.querySelectorAll('.lesson-remove-btn').forEach(btn => {
+            builder.querySelectorAll('.icon-btn-danger').forEach(btn => {
                 btn.addEventListener('click', () => {
                     lessons.splice(parseInt(btn.dataset.idx), 1);
                     renderLessons();

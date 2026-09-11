@@ -13,6 +13,11 @@
 </head>
 <body>
     <div class="page-content">
+        <div class="search-bar" role="search">
+            <span class="material-symbols-outlined search-icon">search</span>
+            <input type="search" id="search-input" placeholder="Search posts, tags, people..." aria-label="Search posts, tags, people">
+            <button class="icon-btn icon-btn-sm search-clear" id="search-clear" title="Clear search" aria-label="Clear search"><span class="material-symbols-outlined">close</span></button>
+        </div>
         <div class="video-grid" id="posts-grid"></div>
     </div>
 
@@ -20,6 +25,8 @@
         import { api, renderPostCard } from './api.js';
 
         let currentUserId = null;
+        let allPosts = [];
+        let searchTimer = null;
 
         async function init() {
             try {
@@ -36,18 +43,61 @@
             const grid = document.getElementById('posts-grid');
             grid.innerHTML = '<div class="loading">Loading posts...</div>';
             try {
-                const posts = await api.posts.getAll({ limit: 20 });
-                grid.innerHTML = '';
-                posts.forEach(post => {
-                    const card = renderPostCard(post, currentUserId);
-                    grid.appendChild(card);
-                });
-                attachEventListeners();
+                allPosts = await api.posts.getAll();
+                renderPosts();
             } catch (e) {
                 console.error('Failed to load posts:', e);
                 grid.innerHTML = '<div class="error">Failed to load posts</div>';
             }
         }
+
+        function matchesQuery(post, query) {
+            const terms = query.trim().toLowerCase().split(/\s+/).filter(Boolean);
+            if (terms.length === 0) return true;
+            const haystack = [
+                post.title || '',
+                (post.tags || []).join(' '),
+                post.author?.displayName || '',
+                post.author?.username || ''
+            ].join(' ').toLowerCase();
+            return terms.every(term => haystack.includes(term));
+        }
+
+        function renderPosts(query = '') {
+            const grid = document.getElementById('posts-grid');
+            grid.innerHTML = '';
+            const term = query.trim();
+            const posts = term ? allPosts.filter(p => matchesQuery(p, query)) : allPosts.slice(0, 20);
+
+            if (posts.length === 0) {
+                grid.innerHTML = '<div class="empty-state"><span class="material-symbols-outlined" style="font-size:48px;color:var(--text-muted)">search_off</span><p>No posts found' + (term ? ' for "' + term + '"' : '') + '</p></div>';
+                return;
+            }
+
+            posts.forEach(post => {
+                const card = renderPostCard(post, currentUserId);
+                grid.appendChild(card);
+            });
+            attachEventListeners();
+        }
+
+        const searchInput = document.getElementById('search-input');
+        const searchClear = document.getElementById('search-clear');
+
+        searchInput.addEventListener('input', () => {
+            clearTimeout(searchTimer);
+            searchTimer = setTimeout(() => {
+                searchClear.classList.toggle('visible', searchInput.value.trim().length > 0);
+                renderPosts(searchInput.value);
+            }, 150);
+        });
+
+        searchClear.addEventListener('click', () => {
+            searchInput.value = '';
+            searchClear.classList.remove('visible');
+            renderPosts();
+            searchInput.focus();
+        });
 
         function attachEventListeners() {
             document.querySelectorAll('[data-action="like"]').forEach(btn => {

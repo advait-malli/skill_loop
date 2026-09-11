@@ -16,7 +16,7 @@
 <body>
     <nav class="navbar">
         <ul class="left">
-            <li><a href="home.html" style="text-decoration:none"><img src="assets/logo.png" alt="Skill Loop" class="logo"></a></li>
+            <li><a href="home.html" style="text-decoration:none"><img src="assets/logo-light.png" data-theme-logo="logo" alt="Skill Loop" class="logo"></a></li>
         </ul>
         <ul class="center">
             <li class="active" data-page="home.html"><a><span class="material-symbols-outlined">home</span><span class="pagename"> Home</span></a></li>
@@ -24,10 +24,10 @@
             <li data-page="my_account.html"><a><span class="material-symbols-outlined">person</span><span class="pagename"> My Account</span></a></li>
         </ul>
         <ul class="right">
-            <li style="background: none;" id="settings-btn"><a title="Settings" role="button"><span class="material-symbols-outlined">settings</span></a></li>
-            <li style="background: none;" id="chat-btn"><a title="Ask Loopa" role="button"><span class="material-symbols-outlined">auto_awesome</span></a></li>
-            <li style="background: none;" id="logout-btn"><a title="Log Out"><span class="material-symbols-outlined">logout</span></a></li>
-            <li style="background: none;" id="more-btn"><a role="button" title="More"><span class="material-symbols-outlined">more_horiz</span></a></li>
+            <li class="nav-icon" id="settings-btn"><a class="icon-btn" title="Settings" role="button"><span class="material-symbols-outlined">settings</span></a></li>
+            <li class="nav-icon" id="chat-btn"><a class="icon-btn" title="Ask Loopa" role="button"><span class="material-symbols-outlined">auto_awesome</span></a></li>
+            <li class="nav-icon" id="logout-btn"><a class="icon-btn" title="Log Out"><span class="material-symbols-outlined">logout</span></a></li>
+            <li class="nav-icon" id="more-btn"><a class="icon-btn" role="button" title="More"><span class="material-symbols-outlined">more_horiz</span></a></li>
         </ul>
         <div class="more-menu" id="more-menu">
             <button id="more-settings" type="button"><span class="material-symbols-outlined">settings</span> Settings</button>
@@ -36,30 +36,26 @@
         </div>
     </nav>
 
-    <iframe id="content-frame" class="content-frame" src="home.html"></iframe>
+    <div class="app-shell">
+        <iframe id="content-frame" class="content-frame" src="home.html"></iframe>
 
-    <a id="page-fab" class="fab hidden" aria-label="Create new course">
-        <span class="material-symbols-outlined">add</span>
-    </a>
-
-    <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
-
-    <aside class="sidebar" id="ai-sidebar" aria-label="Loopa chat">
+        <div class="sidebar-track" id="sidebar-track">
+            <aside class="sidebar" id="ai-sidebar" aria-label="Loopa chat">
         <div class="sidebar-header">
             <div class="sidebar-title">Loopa<small>Skill Loop AI assistant</small></div>
-            <button class="sidebar-close" id="ai-close" title="Close"><span class="material-symbols-outlined">close</span></button>
+            <button class="icon-btn" id="ai-close" title="Close"><span class="material-symbols-outlined">close</span></button>
         </div>
         <div class="chat-messages" id="chat-messages"></div>
         <div class="chat-input-bar">
             <input type="text" id="chat-input" placeholder="Ask Loopa about courses, posts, members..." autocomplete="off">
-            <button class="chat-send-btn" id="chat-send" title="Send"><span class="material-symbols-outlined">arrow_upward</span></button>
+            <button class="icon-btn icon-btn-lg icon-btn-accent" id="chat-send" title="Send"><span class="material-symbols-outlined">arrow_upward</span></button>
         </div>
     </aside>
 
     <aside class="sidebar" id="settings-sidebar" aria-label="Settings">
         <div class="sidebar-header">
             <div class="sidebar-title">Settings</div>
-            <button class="sidebar-close" id="settings-close" title="Close"><span class="material-symbols-outlined">close</span></button>
+            <button class="icon-btn" id="settings-close" title="Close"><span class="material-symbols-outlined">close</span></button>
         </div>
         <div class="settings-body">
             <div class="setting-row">
@@ -85,6 +81,12 @@
             </div>
         </div>
     </aside>
+        </div>
+    </div>
+
+    <a id="page-fab" class="fab hidden" aria-label="Create new course">
+        <span class="material-symbols-outlined">add</span>
+    </a>
 
     <script type="module">
         import { checkAuth, logout } from './auth.js';
@@ -135,29 +137,70 @@
         // ---------- Sidebars ----------
         const aiSidebar = document.getElementById('ai-sidebar');
         const settingsSidebar = document.getElementById('settings-sidebar');
-        const backdrop = document.getElementById('sidebar-backdrop');
+        const sidebarTrack = document.getElementById('sidebar-track');
+        let openSidebarId = null;
 
-        function openSidebar(sidebar) {
-            sidebar.classList.add('open');
-            backdrop.classList.add('open');
-        }
-        function closeAllSidebars() {
+        const SIDEBARS = { ai: aiSidebar, settings: settingsSidebar };
+
+        // The ONLY function allowed to change sidebar open-state. Guarantees
+        // that at most one sidebar is ever marked 'open'. Closed sidebars are
+        // display:none, so a hidden sidebar simply does not exist in the
+        // render tree.
+        function setSidebar(openId) {
+            openSidebarId = openId || null;
             aiSidebar.classList.remove('open');
             settingsSidebar.classList.remove('open');
-            backdrop.classList.remove('open');
+            const target = SIDEBARS[openId];
+            if (target) {
+                target.classList.add('open');
+                sidebarTrack.classList.add('open');
+            } else {
+                sidebarTrack.classList.remove('open');
+            }
         }
+
+        function openSidebar(id) {
+            if (openSidebarId === id) {
+                setSidebar(null); // tapping the same button closes it
+            } else {
+                setSidebar(id);
+            }
+        }
+
+        function closeAllSidebars() {
+            setSidebar(null);
+        }
+
+        // DOM-level guard: no matter what adds the class, the moment BOTH
+        // sidebars ever carry 'open', force the non-intended one closed.
+        const enforceSingleOpen = () => {
+            const aiOpen = aiSidebar.classList.contains('open');
+            const settingsOpen = settingsSidebar.classList.contains('open');
+            if (aiOpen && settingsOpen) {
+                if (openSidebarId === 'settings') {
+                    aiSidebar.classList.remove('open');
+                } else {
+                    settingsSidebar.classList.remove('open');
+                }
+            }
+        };
+        const sidebarGuard = new MutationObserver(enforceSingleOpen);
+        sidebarGuard.observe(aiSidebar, { attributes: true, attributeFilter: ['class', 'style'] });
+        sidebarGuard.observe(settingsSidebar, { attributes: true, attributeFilter: ['class', 'style'] });
+
+        // Clean slate: never start with a sidebar open (drops stale '.open'
+        // state that could linger from a previous session).
+        setSidebar(null);
 
         function openChatFromBar() {
             closeMoreMenu();
-            settingsSidebar.classList.remove('open');
-            openSidebar(aiSidebar);
+            openSidebar('ai');
             if (!chatStarted) startChat();
             document.getElementById('chat-input').focus();
         }
         function openSettingsFromBar() {
             closeMoreMenu();
-            aiSidebar.classList.remove('open');
-            openSidebar(settingsSidebar);
+            openSidebar('settings');
             syncSettingsUI();
         }
         document.getElementById('chat-btn').addEventListener('click', openChatFromBar);
@@ -189,7 +232,6 @@
         });
         document.getElementById('ai-close').addEventListener('click', closeAllSidebars);
         document.getElementById('settings-close').addEventListener('click', closeAllSidebars);
-        backdrop.addEventListener('click', closeAllSidebars);
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 closeMoreMenu();
@@ -223,9 +265,8 @@
             const enabled = localStorage.getItem('skillloop_ai_enabled') !== 'false';
             document.getElementById('chat-btn').style.display = enabled ? '' : 'none';
             document.getElementById('more-chat').style.display = enabled ? '' : 'none';
-            if (!enabled) {
-                aiSidebar.classList.remove('open');
-                backdrop.classList.remove('open');
+            if (!enabled && openSidebarId === 'ai') {
+                closeAllSidebars();
             }
         }
         refreshAiButton();

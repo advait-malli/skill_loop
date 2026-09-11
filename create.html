@@ -13,7 +13,7 @@
 </head>
 <body>
     <div class="page-content">
-        <a href="home.html" class="home-btn"><span class="material-symbols-outlined">arrow_back</span> Home</a>
+        <a href="home.html" class="btn btn-ghost btn-back"><span class="material-symbols-outlined">arrow_back</span> Home</a>
         <h1>Create a New Post</h1>
         <div class="create-layout">
             <div class="create-card">
@@ -116,7 +116,7 @@
             chipsEl.innerHTML = uploadedFiles.map((f, i) => `
                 <span class="file-chip">
                     <span class="material-symbols-outlined inline-icon">${f.icon}</span>${f.name}
-                    <span class="chip-remove" data-idx="${i}" title="Remove" style="cursor:pointer;display:inline-flex;align-items:center">
+                    <span class="chip-remove" data-idx="${i}" title="Remove">
                         <span class="material-symbols-outlined inline-icon" style="font-size:0.9rem">close</span>
                     </span>
                 </span>
